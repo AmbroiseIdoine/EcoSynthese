@@ -15,7 +15,10 @@ def page_view(request, page_name):
     return render(request, 'ecosyn/page.html', {"object":page})
 
 def home(request):
-    return page_view(request,"Accueil")
+    page = get_object_or_404(Page, name="Accueil")
+    secteur_list = Secteur.objects.order_by('-name').all()
+    context={"object":page, "secteur_list":secteur_list}
+    return render(request,'ecosyn/home.html',context)
 
 def apropos(request):
     return page_view(request, "A propos")
@@ -67,7 +70,7 @@ class ReportView(generic.ListView):
     
     def get_queryset(self):
         """ Return the last ten published reports """
-        return Secteur.objects.order_by('-name')[:10]
+        return Secteur.objects.order_by('-name')
         
 class TopicView(generic.ListView):
     template_name = 'ecosyn/topics.html'

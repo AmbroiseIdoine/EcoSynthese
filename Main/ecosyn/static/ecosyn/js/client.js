@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    $(".diagram_text").hide()
+    $("cause_text").hide();
+    $(".diagram_text").hide();
+    $(".secteur_description").hide();
 });
 function show_text(id){
     document.getElementById(id).style.display = 'block';

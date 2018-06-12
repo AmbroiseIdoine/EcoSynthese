@@ -1,26 +1,38 @@
-{% extends "ecosyn/base.html" %}
+{% extends "ecosyn/section/page_generic.html" %}
 
-{%block content%}
-{% load static %}
+{% block sections %}
+<!-- content, divided into multiple sections -->
+{% for section_list in object.get_sections %}
+{% if section_list %}
+{% include "ecosyn/section/part_generic.html" %}
 
-<div id="catch_div">
-    <h2 class="catch_phrase">Travaillez là où vous avez vraiment</h2>
-    <h2 class="catch_phrase">de l'impact</h2>
+<!-- add the Secteurs list: --> 
+{% if section_list.0.title == "Secteurs" %}
+
+<div id="Secteur_list_container">
+{% for sec in secteur_list %}
+    
+    <div class="secteur_container" id="secteur_container_{{sec.id}}" 
+        style="{% if sec.header_picture %} 
+        background-image: url({{ sec.header_picture.picture.url }}) {% endif%};"
+        onmouseenter="show_text('secteur_description_{{sec.id}}');">
+        
+        <a href="{% url 'ecosyn:report_details' sec.id %}">
+        <div class="secteur_description" id="secteur_description_{{sec.id}}"
+        onmouseleave="hide_text('secteur_description_{{sec.id}}');">
+        <h3> {{sec.title}} </h3>
+        <p> {{sec.short_description}} </p>
+        </div>
+        </a>
+        
+    </div>
+{% endfor %}
 </div>
+{% endif %}
 
-<div id="home_main">
+{% endif %}
+{% endfor %}
+{% endblock %}
 
-    <h2 class = "text_line"> CARTE D'IMPACT </h2>
-
-    <p>
-        Cette carte montre les causes principales de chaque symptôme 
-        des problèmes environnementaux actuels.
-    </p>
-    <p>
-        Vous pouvez zoomer pour repérer les sections qui vous intéressent, 
-        puis vous rendre sur la page correspondante pour plus d'informations.
-    </p>
-
-    <img src="{{ carte_impact.picture.url }}" alt="Carte d'impact" style="width:80%"/>
-</div>
-{% endblock content %}
+{% block causal_link %}
+{% endblock %}

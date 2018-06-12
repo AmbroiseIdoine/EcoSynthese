@@ -1,12 +1,9 @@
 
 /*  base.html */
 
-p{
-    font-size: 16px;
-}
-
 body,footer{
     color:grey;
+    font-size: 16px;
     text-align:center;
 }
 
@@ -74,20 +71,41 @@ a{
 
 
 /* home.html */
-#catch_div{
-    background: white url('image/abeille.jpg') no-repeat;
-    background-size:     cover; 
-    padding-top:70px;
-    padding-bottom:140px;
-    overflow:hidden;
+#Secteur_list_container{
+    width: 100%;
+    text-align: left;
 }
 
-#home_main{
+.secteur_container{
+    margin: 2%;
+    width: 29%;
+    display: inline-block;
+    background-color: grey;
+    background-size: cover;
+    position: relative
 }
 
-{
-    border-bottom: 1px solid rgba(160, 160, 159, 1);
+.secteur_container,.secteur_description{
+    height: 150px;
 }
+
+.secteur_description{
+    width: 90%;
+    padding-top: 5px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5px;
+    background-color: rgba(255,255,255,0.7);
+    text-align: center;
+    color: rgb(100,100,100);
+    font-size: 13px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+
 
 /* nice code to create a text over a line */
 
@@ -180,7 +198,7 @@ a{
 }
 
 .slide_frame{
-    margin-left: 100px;
+    margin-left: 0px;
     position: relative;
     overflow: hidden;
 }
@@ -197,11 +215,13 @@ a{
 .section_pic_left_slide{
     float:left;
     margin:0px;
+    position: absolute
 }
 
 .section_pic_right_slide{
     float:right;
     margin:0px;
+    position: absolute
 }
 
 .section_pic_bottom_slide{
@@ -214,7 +234,7 @@ a{
 }
 
 .section_text_slide{
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(255,255,255,0.8);
     color: rgba(100,100,100,1);
     position: absolute;
 }
@@ -227,6 +247,23 @@ a{
 }
 .section_text>p,.section_text_slide>p{
     margin: 0px;
+}
+
+/* opinion section */
+
+.opinion{
+    margin: 30px;
+    padding: 30px;
+    border: solid rgb(149,167,18) 2px;
+    position: relative
+}
+
+.opinion_tag{
+    color: rgb(149,167,18);
+    font-size:14px;
+    position: absolute;
+    top: 10px;
+    right: 30px;
 }
 
 /* decorations for a section */

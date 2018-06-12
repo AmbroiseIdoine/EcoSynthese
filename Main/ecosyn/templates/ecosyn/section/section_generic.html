@@ -6,11 +6,16 @@ it should receive a Section object named "section"
 {% if number == 1 %}
 
 {% with margin=20 %}
+{% if section.opinion %}
+<div class="opinion">
+{% endif %}
 <div class="section" style="
     {% if section.background %} background:{{section.background.url}}; {%endif%}">
     {% with text=section.get_text|safe %}
     {% if section.title %}
-        <h2 class="text_line"> {{section.title }} </h2>
+        <h2 {% if not section.opinion %}class="text_line" {% endif %}> 
+        {{section.title }} 
+        </h2>
     {% endif %}
     {% if section.subtitle %}
         <h3> {{section.subtitle }} </h3>
@@ -54,7 +59,12 @@ it should receive a Section object named "section"
     {%endwith%}
     {%endwith%}   
 </div>
-
+{% if section.opinion %}
+<div class="opinion_tag">
+Attention: opinion 
+</div>
+</div>
+{% endif %}
 
 <script>
 var margin = {{margin}};
@@ -73,11 +83,16 @@ $("#section_text{{section.id}}").width(wid);
     {% with text=section.get_text|safe %}
     {% with pics=section.get_illustrations %}
     <div id="section_div{{section.id}}" style="
-        height: {{height|add:section.text_size.1}}px">
+        height: {{height|add:section.text_size.1}}px">
         {% if pics.0.1 %}
         <div class="section_pic_left_slide" id="section_pic_left{{section.id}}"
-            style="width:{{pics.0.2}}px; height:{{pics.0.3}}px;
-            left:0px;">
+            style="width:{{pics.0.2}}px; height:{{pics.0.3}}px;left:0px;
+            {% if pics.0.0 == 'middle' %} 
+            top: {{height|subtract:section.text_size.1|subtract:pics.0.3|times:0.5}}px;
+            {% elif pics.0.0 == 'top'%} top: 0px;
+            {% else %} bottom: 0px; 
+            {% endif %}">
+            
             {% for illustration in pics.0.1 %}
             {% include "ecosyn/section/illustration_generic.html" %}
             {% endfor %}
@@ -106,7 +121,12 @@ $("#section_text{{section.id}}").width(wid);
         {% if pics.1.1 %}
         <div class="section_pic_right_slide" id="section_pic_right{{section.id}}"
             style="width:{{pics.1.2}}px; height:{{pics.1.3}}px;
-            right: 0px;">
+            right: 0px; vertical-align: {{pics.1.0}};
+            {% if pics.1.0 == 'middle' %} 
+            top: {{height|subtract:section.text_size.1|subtract:pics.1.3|times:0.5}}px;
+            {% elif pics.1.0 == 'top'%} top: 0px;
+            {% else %} bottom: 0px; 
+            {% endif %}">
             {% for illustration in pics.1.1 %}
             {% include "ecosyn/section/illustration_generic.html" %}
             {% endfor %}

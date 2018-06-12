@@ -104,6 +104,10 @@ def find_links(s):
 POSITIONS = (
     ("L","Left"),
     ("R","Right"),
+    ("LT","Left Top"),
+    ("RT","Right Top"),
+    ("LB","Left Bottom"),
+    ("RB","Right Bottom"),
     ("BR","Bottom Right"),
     ("BL","Bottom Left"),
     ("BC","Bottom Center")
@@ -438,7 +442,7 @@ class Section(models.Model):
     def get_illustrations(self):
         """Order illustrations by pane position"""
         
-        temp=[["L",[],0,0],["R",[],0,0],["center",[],0,0]]
+        temp=[["middle",[],0,0],["middle",[],0,0],["center",[],0,0]]
         for pic in self.illustrations.all():
             
             if pic.position=="L":
@@ -461,7 +465,15 @@ class Section(models.Model):
                 temp[2][0] = "right"
             elif pos == "BL":
                 temp[2][0] = "left"
+        for i in range(2):
+            if len(temp[i][1])>0:
+                pos = temp[i][1][0].position
+                if pos in ["RT","LT"]:
+                    temp[i][0] = "top"
+                elif pos in ["RB","LB"]:
+                    temp[i][0] = "bottom"
         self.text_size=(-temp[0][2]-temp[1][2],-temp[2][3])
+        print(temp)
         return temp
 
 
