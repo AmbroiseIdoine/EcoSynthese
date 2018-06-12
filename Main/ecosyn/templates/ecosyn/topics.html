@@ -1,0 +1,26 @@
+
+{% extends "ecosyn/base.html" %}
+
+{%block content%}
+
+<h1 style="text-align: center;">Parcourir les sujets</h1>
+<br>
+<h3>Voici une collection aussi exhaustive que possible 
+de thèmes autour de l'environement:</h3>
+<h3> vous pouvez naviguer entre eux en utilisant 
+les liens de causalité qui les relient </h3>
+<br>
+
+
+<ul id="topic_list">
+    {% for topic in object_list %}
+    <li class="topic_item" >
+        <a class="topic_link" 
+           href="{% url 'ecosyn:topic_details' topic.id %}">
+            {{topic.title}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+    
+{% endblock content %}

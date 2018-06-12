@@ -1,0 +1,102 @@
+{% extends "ecosyn/base.html" %}
+
+{%block content%}
+
+{%load define_action%}
+
+<!-- bige header picture -->
+<div id="main">
+{% if object.header_picture is not None %}
+<img src="{{ object.header_picture.picture.url }}" alt="Header pic" id="header_picture"/>
+{% endif %}
+
+<!-- title -->
+{% block title %}
+<h1 style="text-align: center;">{{object.title}}</h1>
+{% endblock %}
+<h3 style="text-align: center;">{{object.short_description}}</h3>
+
+<!-- content, divided into multiple sections -->
+{% for sec in object.section_set.all|order_by:"order" %}
+    <div id="section{{sec.order}}" class="section">
+        {% with section_text=sec.get_section_text|safe %}
+        {% if sec.title is not None%}
+            <h3> {{sec.title }} </h3>
+        {% endif %}
+        {% if sec.picture is not None%}
+        
+            <!--{% cycle "left" "right" as text_side %}-->
+            {% if text_side == "left" %}
+                <div class="section_text_div">
+                    <p> {{section_text}} </p>
+                </div>
+            {% endif %}
+            
+            <div class="section_picture_div">
+                <p> {{sec.picture.title}} </p>
+                <img src="{{sec.picture.picture.url}}" class="section_picture">
+                <em class="picture_source"> {{sec.picture.source}} </em>
+            </div>
+            
+            {% if text_side == "right" %}
+                <div class="section_text_div">
+                    <p> {{section_text}} </p>
+                </div>
+            {% endif %}
+            
+        {% else %}
+        <p> {{section_text}} </p>
+        {% endif %}
+        {%endwith%}
+    </div>
+{% endfor %}
+
+
+
+<!-- cause diagram -->
+{% if object.get_cause_diagram %}
+{% with diagram=object.cause_diagram %}
+{% include "ecosyn/diagram.html" %}
+{% endwith %}
+{% endif %}
+
+<!-- still display links if browser doesnt support canvas -->
+<canvas>
+    {% block causal_link %}
+    <div id="causal_link_div">
+        <div id="causal_link_left">
+            <h3> Causes majeures </h3>
+            {% for lien in object.causes.all %}
+            {% with sub=lien.cause %}
+            <div class="causal_link_box">
+                <a class="causal_link" 
+                   href="{% url 'ecosyn:topic_details' sub.id %}">
+                    {{sub.title}}
+                </a>
+            </div>
+            {%endwith%}
+            {% endfor %}
+        </div>
+        <div id="causal_link_right">
+            <h3> Consequences </h3>
+            {% for lien in object.consequences.all %}
+            {% with sub=lien.consequence %}
+            <div class="causal_link_box">
+                <a class="causal_link" 
+                   href="{% url 'ecosyn:topic_details' sub.id %}">
+                    {{sub.title}}
+                </a>
+            </div>
+            {%endwith%}
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</canvas>
+
+
+</div>
+
+
+
+{% endblock content %}

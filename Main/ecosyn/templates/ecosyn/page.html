@@ -1,0 +1,11 @@
+{% extends "ecosyn/topic_details.html" %}
+
+{% block sections %}
+<!-- content, divided into multiple sections -->
+{% for section_list in object.get_sections %}
+    {% include "ecosyn/section/part_generic.html" %}
+{% endfor %}
+{% endblock %}
+
+{% block causal_link %}
+{% endblock %}

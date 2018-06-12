@@ -1,0 +1,7 @@
+{% extends "ecosyn/base.html" %}
+
+{%block content%}
+{% with diagram=object.cause_diagram %}
+{% include "ecosyn/diagram.html" %}
+{% endwith %}
+{% endblock content %}

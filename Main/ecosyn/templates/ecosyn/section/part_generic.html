@@ -1,0 +1,55 @@
+<!-- render a "part" of a document (sujet, secteur or page)
+it should receive a Section list object named "sections"
+-->
+{%load define_action%}
+
+{% with number=section_list|length %}
+{% if number >= 1 %}
+<div id="section{{section_list.0.order}}" class="section_parent"
+    style="{% if number > 1 %} height:{{height}}px; {% endif %}" >
+
+{% if number == 1 %}
+    {% with section=section_list.0 %}
+    {% include "ecosyn/section/section_generic.html" %}
+    {% endwith %}
+{% else %}
+    <div class="slide_frame" 
+         style="width:{{width}}px; height:{{height}}px;">
+        <div class="slide_movable" id="slide_movable{{section_list.0.order}}"
+             style="width:{{width|times:number}}px; height:{{height}}px; left: 0">
+        {% for section in section_list %}
+            <div class="slide" 
+                style="width:{{width}}px;
+                       height:{{height}}px;
+                       left:{{forloop.counter|times:width|subtract:width}}px;">
+                {% include "ecosyn/section/section_generic.html" %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <img class="left_button"
+         id="left_button{{section_list.0.order}}" 
+         src="/media/ecosyn/left_arrow.png"
+         style="height:{{icon_height}}px;"
+         onclick="moveSlide(0,{{section_list.0.order}},-1)">
+    <img class="right_button"
+         id="right_button{{section_list.0.order}}" 
+         src="/media/ecosyn/right_arrow.png"
+         style="height:{{icon_height}}px;"
+         onclick="moveSlide(0,{{section_list.0.order}},+1)">
+    <div class="slide_position" align="center" style="
+        top:{{height|subtract:20}}px;">
+        {% for section in section_list %}
+        {% with i=forloop.counter %}
+        <div id="slide_position_{{section_list.0.order}}_{{i}}"
+             class="slide_position_circle" 
+             {% if i == 1 %} style="background:darkgrey" {%endif%}
+             onclick="moveSlide({{i|subtract:1}},{{section_list.0.order}},0)">
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+{%endif%}
+</div>
+{%endif%}
+{% endwith %}

@@ -1,0 +1,131 @@
+<!-- render a "section"
+it should receive a Section object named "section"
+-->
+{%load define_action%}
+
+{% if number == 1 %}
+
+{% with margin=20 %}
+<div class="section" style="
+    {% if section.background %} background:{{section.background.url}}; {%endif%}">
+    {% with text=section.get_text|safe %}
+    {% if section.title %}
+        <h2 class="text_line"> {{section.title }} </h2>
+    {% endif %}
+    {% if section.subtitle %}
+        <h3> {{section.subtitle }} </h3>
+    {% endif %}
+    {% with pics=section.get_illustrations %}
+    <div id="section_div{{section.id}}">
+        {% if pics.0.1 %}
+        <div class="section_pic_left" id="section_pic_left{{section.id}}"
+            style="width:{{pics.0.2}}px; height:{{pics.0.3}}px;
+            left:0px; margin-right:{{margin}}px;">
+            {% for illustration in pics.0.1 %}
+            {% include "ecosyn/section/illustration_generic.html" %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="section_text" id="section_text{{section.id}}">
+            <p> {{text}} </p>
+        </div> 
+        
+        {% if pics.1.1 %}
+        <div class="section_pic_right" id="section_pic_right{{section.id}}"
+            style="width:{{pics.1.2}}px; height:{{pics.1.3}}px;
+            right: 0px; margin-left: {{margin}}px;">
+            {% for illustration in pics.1.1 %}
+            {% include "ecosyn/section/illustration_generic.html" %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% if pics.2.1 %}
+    <div class="section_pic_bottom"
+        style="height:{{pics.2.3}}px; text-align:{{pics.2.0}};
+        margin-top: {{margin}}px;">
+        {% for illustration in pics.2.1 %}
+        {% include "ecosyn/section/illustration_generic.html" %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {%endwith%}
+    {%endwith%}   
+</div>
+
+
+<script>
+var margin = {{margin}};
+var wid = document.getElementById("section_div{{section.id}}").offsetWidth;
+wid = wid+{{section.text_size.0}}-10-2*margin;
+$("#section_text{{section.id}}").width(wid);
+</script>
+{%endwith%}
+
+{%else%}
+{% with pad=40 %}
+<div class="section_slide" style="{% if section.background %}
+    background: url('{{section.background.picture.url}}'); 
+    background-size: cover;{%endif%}
+    height: {{height}}px; width:{{width}}px;">
+    {% with text=section.get_text|safe %}
+    {% with pics=section.get_illustrations %}
+    <div id="section_div{{section.id}}" style="
+        height: {{height|add:section.text_size.1}}px">
+        {% if pics.0.1 %}
+        <div class="section_pic_left_slide" id="section_pic_left{{section.id}}"
+            style="width:{{pics.0.2}}px; height:{{pics.0.3}}px;
+            left:0px;">
+            {% for illustration in pics.0.1 %}
+            {% include "ecosyn/section/illustration_generic.html" %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        
+        <div class="section_text_slide" id="section_text{{section.id}}" style="
+         width: {{width|add:section.text_size.0|subtract:pad}}px; 
+         height: {{height|add:section.text_size.1|subtract:pad}}px;
+         padding: {{pad|times:0.5}}px; left:{{pics.0.2}}">
+            {% if section.title %}
+            <h3> {{section.title }} </h3>
+            {% endif %}
+            {% if section.subtitle %}
+            <h4> {{section.subtitle }} </h4>
+            {% endif %}
+            <div class = "small_line" align="center">
+                <div class = "actual_small_line">
+                </div>
+            </div>
+            <p> {{text}} </p>
+        </div>
+        
+        
+        {% if pics.1.1 %}
+        <div class="section_pic_right_slide" id="section_pic_right{{section.id}}"
+            style="width:{{pics.1.2}}px; height:{{pics.1.3}}px;
+            right: 0px;">
+            {% for illustration in pics.1.1 %}
+            {% include "ecosyn/section/illustration_generic.html" %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+    </div>
+    {% if pics.2.1 %}
+    <div class="section_pic_bottom_slide"
+        style="height:{{pics.2.3}}px; text-align:{{pics.2.0}};">
+        {% for illustration in pics.2.1 %}
+        {% include "ecosyn/section/illustration_generic.html" %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {%endwith%}
+    {%endwith%}   
+</div>
+{% endwith %}
+{%endif%}
+

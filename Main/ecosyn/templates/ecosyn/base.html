@@ -1,0 +1,40 @@
+{% load static %}
+<html>
+<head>
+
+</head>
+
+<link rel="stylesheet" type="text/css" href="{% static 'ecosyn/style.css' %}" />
+<script src="{%static 'ecosyn/js/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{%static 'ecosyn/js/client.js' %}"></script>
+
+<body>
+
+<header id="header">
+
+<div id="header_banner">
+<a href="{% url 'ecosyn:home' %}" class="header_link"> Home </a>
+<a href="{% url 'ecosyn:reports' %}" class="header_link"> Dossiers </a>
+<a href="{% url 'ecosyn:topics' %}" class="header_link"> Parcourir </a>
+<a href="{% url 'ecosyn:apropos' %}" class="header_link"> À propos </a>
+<a href="{% url 'ecosyn:sources' %}" class="header_link"> Sources </a>
+</div>
+	
+<div id="header_title">
+    <h2 class="header_title"> L'INPARABLE </h2>
+    <h3 class="header_title"> L'Ingenieur Pareto Durable </h3>
+</div>
+
+<a id="main_icon" href="{% url 'ecosyn:home' %}">
+<img src="/media/ecosyn/icone_main.png" alt="Home" style="width:30px">
+<a>
+
+</header>
+{% block content %}
+{% endblock %}
+
+<footer id="footer">
+    <h6> © 2018 by L'imparable </h6>
+</footer>
+</body>
+</html>

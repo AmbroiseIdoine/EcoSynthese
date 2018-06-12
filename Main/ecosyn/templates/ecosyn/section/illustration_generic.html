@@ -1,0 +1,30 @@
+<!-- render a "illustration"
+it should receive a Illustration object named "illustration"
+-->
+<div class = "illustration">
+{% if illustration.picture_size %}
+    {% with pic=illustration.picture %}
+    {% if pic.link %}
+    <a href="{{pic.link}}">
+    {%endif%}
+    <div class="crop_image"
+        style="width: {{illustration.size_crop.0}}px; 
+               height: {{illustration.size_crop.1}}px";>
+        <img src="{{illustration.picture.picture.url}}" 
+            alt="{{illustration.picture.title}}"
+            style="width: {{illustration.size_pic.0}}px; 
+                   height: {{illustration.size_pic.1}}px;
+                   margin: {{illustration.margin_pic}};">
+    </div>
+    {% if pic.link %}
+    </a>
+    {%endif%}
+    {%endwith%}
+{% elif illustration.code %}
+    {{illustration.code|safe}}
+{% elif illustration.nodes %}
+    {% with diagram=illustration.get_diagram %}
+    {% include "ecosyn/diagram.html" %}
+    {% endwith %}
+{% endif %}
+</div>

@@ -1,0 +1,14 @@
+<!-- render a "picture"
+it should receive a Picture object named "picture"
+-->
+{% with dim=picture.resize %}
+<div class="crop_image"
+    style="width: {{dim.1.0}}px; 
+           height: {{dim.1.1}}px";>
+    <img src="{{picture.picture.url}}" 
+        alt="{{picture.title}}"
+        style="width: {{dim.0.0}}px; 
+               height: {{dim.0.1}}px;
+               margin: {{dim.2}};">
+</div>
+{%endwith%}

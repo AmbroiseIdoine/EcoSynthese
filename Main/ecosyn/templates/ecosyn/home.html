@@ -1,0 +1,26 @@
+{% extends "ecosyn/base.html" %}
+
+{%block content%}
+{% load static %}
+
+<div id="catch_div">
+    <h2 class="catch_phrase">Travaillez là où vous avez vraiment</h2>
+    <h2 class="catch_phrase">de l'impact</h2>
+</div>
+
+<div id="home_main">
+
+    <h2 class = "text_line"> CARTE D'IMPACT </h2>
+
+    <p>
+        Cette carte montre les causes principales de chaque symptôme 
+        des problèmes environnementaux actuels.
+    </p>
+    <p>
+        Vous pouvez zoomer pour repérer les sections qui vous intéressent, 
+        puis vous rendre sur la page correspondante pour plus d'informations.
+    </p>
+
+    <img src="{{ carte_impact.picture.url }}" alt="Carte d'impact" style="width:80%"/>
+</div>
+{% endblock content %}

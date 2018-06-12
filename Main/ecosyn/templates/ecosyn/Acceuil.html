@@ -1,0 +1,23 @@
+{% extends "ecosyn/base.html" %}
+
+{%block content%}
+
+{%load define_action%}
+
+<!-- big header picture -->
+<div id="main">
+{% if object.header_picture is not None %}
+<img src="{{ object.header_picture.picture.url }}" 
+    alt="Header pic" id="header_picture"/>
+{% endif %}
+
+<!-- title -->
+{% block title %}
+<h1 style="text-align: center;">{{object.title}}</h1>
+{% endblock %}
+<h3 style="text-align: center;">{{object.short_description}}</h3>
+
+<!-- content, divided into multiple sections -->
+{% for section_list in object.get_sections %}
+    {% include "ecosyn/section/part_generic.html" %}
+{% endfor %}

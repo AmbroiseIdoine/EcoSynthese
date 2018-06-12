@@ -1,0 +1,21 @@
+{% extends "ecosyn/base.html" %}
+
+{%block content%}
+
+<h1 style="text-align: center;">Dossiers</h1>
+
+<br>
+<h3>Quelques dossiers ciblés autour de l'environement:</h3>
+<br>
+<ul id="topic_list">
+    {% for report in object_list %}
+    <li class="topic_item" >
+        <a class="topic_link" 
+           href="{% url 'ecosyn:report_details' report.id %}">
+            {{report.title}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
